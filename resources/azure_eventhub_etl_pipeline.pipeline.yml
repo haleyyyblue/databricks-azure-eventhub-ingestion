@@ -1,0 +1,24 @@
+resources:
+  pipelines:
+    azure_eventhub_etl_pipeline:
+      name: azure_eventhub_etl_pipeline
+      configuration:
+        "io.ingestion.eh.secretsScopeName": "<your-scope>"
+        "iot.ingestion.eh.accessKeyName": "<your-eventhub-access-key-name>"
+        "iot.ingestion.eh.name": "<your-eventhub-name>"
+        "iot.ingestion.eh.namespace": "<your-eventhub-namespace>"
+        "iot.ingestion.kafka.requestTimeout": "60000"
+        "iot.ingestion.kafka.sessionTimeout": "30000"
+        "iot.ingestion.spark.failOnDataLoss": "false"
+        "iot.ingestion.spark.maxOffsetsPerTrigger": "50000"
+        "iot.ingestion.spark.startingOffsets": "latest"
+        "storage": "abfss://<your-azure-container>@<your-azure-storage-account>.dfs.core.windows.net/iot/"
+      libraries:
+        - glob:
+            include: /Users/<your_email>/azure_eventhub_etl_pipeline/transformations/**
+      catalog: bu1dev
+      channel: CURRENT
+      photon: true
+      root_path: /Users/<your_email>/azure_eventhub_etl_pipeline
+      schema: bronze
+      serverless: true
