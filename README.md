@@ -63,14 +63,14 @@ targets:
 | `<your-azure-container>` | Azure Storage Container name | `iot-data` |
 | `<your-azure-storage-account>` | Azure Storage Account name | `mystorageaccount` |
 
-#### Databricks Path Settings
+#### Databricks Catalog Settings
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `<your_email>` (libraries.glob.include) | Your email address | `john.doe@company.com` |
-| `<your_email>` (root_path) | Your email address | `john.doe@company.com` |
 | `catalog` | Unity Catalog name (change if needed) | `bu1dev` |
 | `schema` | Schema name (change if needed) | `bronze` |
+
+> **Note:** The pipeline uses `transformations/bronze.py` from the bundle. No workspace path configuration is needed.
 
 **Example:**
 ```yaml
@@ -90,12 +90,11 @@ resources:
         "iot.ingestion.spark.startingOffsets": "latest"
         "storage": "abfss://iot-data@mystorageaccount.dfs.core.windows.net/iot/"  # ✅ Storage path
       libraries:
-        - glob:
-            include: /Users/john.doe@company.com/azure_eventhub_etl_pipeline/transformations/**  # ✅ Replace with your email
+        - file:
+            path: ../transformations/bronze.py  # Uses local bundle file
       catalog: bu1dev  # ✅ Change catalog if needed
       channel: CURRENT
       photon: true
-      root_path: /Users/john.doe@company.com/azure_eventhub_etl_pipeline  # ✅ Replace with your email
       schema: bronze  # ✅ Change schema if needed
       serverless: true
 ```

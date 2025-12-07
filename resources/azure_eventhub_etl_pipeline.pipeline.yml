@@ -14,11 +14,10 @@ resources:
         "iot.ingestion.spark.startingOffsets": "latest"
         "storage": "abfss://<your-azure-container>@<your-azure-storage-account>.dfs.core.windows.net/iot/"
       libraries:
-        - glob:
-            include: /Users/<your_email>/azure_eventhub_etl_pipeline/transformations/**
+        - file:
+            path: ../transformations/bronze.py
       catalog: bu1dev
       channel: CURRENT
       photon: true
-      root_path: /Users/<your_email>/azure_eventhub_etl_pipeline
       schema: bronze
       serverless: true
